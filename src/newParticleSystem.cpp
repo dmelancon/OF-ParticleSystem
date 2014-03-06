@@ -7,6 +7,7 @@
 //
 
 #include "newParticleSystem.h"
+#include "testApp.h"
 
 newParticleSystem::newParticleSystem(ofVec3f location ,float mass){
     origin = location;
@@ -23,14 +24,16 @@ void newParticleSystem::addParticle(){
 }
 
 void newParticleSystem::update(){
-    for(int i = 0; i<particles.size(); i++){
-        particles[i]->addParticle();
-        particles[i]->update();
-        if(particles[i]->isDead()){
-            delete particles[i];
-            particles.erase(particles.begin()+i);
+    for(auto it = particles.begin(); it != particles.end();){
+        if((*it)->isDead()){
+            delete (*it);
+            it = particles.erase(it);
+        }else{
+            (*it)->addParticle();
+            (*it)->update();
+            ++it;
         }
-
+        
                  }
     
     
@@ -39,9 +42,8 @@ void newParticleSystem::update(){
 }
 
 void newParticleSystem::display(){
-    for(int i=0;i<particles.size();i++){
-        
-        particles[i]->display();
+for(auto it = particles.begin(); it != particles.end();++it){
+       (*it)->display();
         
     }
 }
@@ -56,7 +58,14 @@ bool  newParticleSystem::isDead(){
     }
 
 void newParticleSystem::checkEdges(){
-    for(int i = 0; i<particles.size(); i++){
-        particles[i]->checkEdges();
-           }
+    for(auto it = particles.begin(); it != particles.end();++it){
+        (*it)->display();
+        
+    }
+}
+
+
+newParticleSystem::~newParticleSystem(){
+    particles.clear();
+    
 }

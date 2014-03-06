@@ -7,11 +7,11 @@
 //
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(ofVec3f location ,float mass){
+ParticleSystem::ParticleSystem(ofVec3f location ,float mass ){
     origin = location;
     m = mass;
     radius= 500;
-    lifespan =200;
+    lifespan =100;
 }
 
 

@@ -13,18 +13,13 @@
 #include "ofMain.h"
 class particleBase{
     public:
+    particleBase(){}
     virtual void update() = 0;
     virtual void display() = 0;
     virtual void checkEdges()=0;
     virtual bool isDead() = 0;
     virtual void addParticle() =0;
-    std::vector<particleBase*> particles;
-    ~particleBase(){
-        for ( int i = 0; i < particles.size(); i++ )
-        {
-            delete  particles[i];
-        }
-        particles.clear(); 
+    virtual ~particleBase(){
     }
 
 };

@@ -7,15 +7,15 @@
 //
 
 #include "Particle.h"
-#include "ofMain.h"
+
 
 Particle::Particle (ofVec3f p, float m ){
     acceleration.set(ofRandom(-.1,.1),-.05,ofRandom(-.1,.1));
     velocity.set(ofRandom(-1,1),0,ofRandom(-1,1));
     location = p;
-    lifespan = 200;
+    lifespan = 255;
     mass = m;
-    color = ofColor(ofRandom(0,255));
+    color = ofColor(ofRandom(0,255),ofRandom(0,255),ofRandom(0,255));
 }
 
 
@@ -24,13 +24,17 @@ void Particle::update() {
     velocity += acceleration;
     location +=velocity;
     lifespan -= 1.0;
-    for(int i = 0; i<particles.size(); i++){
-        particles[i]->addParticle();
-        particles[i]->update();
-        if(particles[i]->isDead()){
-            delete particles[i];
-            particles.erase(particles.begin()+i);
+    for(auto it = particles.begin(); it != particles.end();){
+        
+        if((*it)->isDead()){
+            delete (*it);
+            it = particles.erase(it);
+        }else{
+            (*it)->addParticle();
+            (*it)->update();
+            it++;
         }
+   
         
     }
 }
@@ -38,13 +42,13 @@ void Particle::update() {
 
 
 void Particle::display(){
-    for(int i=0;i<particles.size();i++){
-        
-        particles[i]->display();
-    }
+    for(auto it=particles.begin();it != particles.end();++it){
+       (*it)->display();
+}
 
-    ofSetColor(255);
-    //ofSetSphereResolution(100);
+    ofSetColor(255,lifespan);
+//    ofSetSphereResolution(20);
+//    ofDrawSphere(location.x,location.y,location.z,10);
     ofPushMatrix();
     ofTranslate(location.x,location.y,location.z);
     ofCircle(2,2,2 );
@@ -100,10 +104,21 @@ bool Particle::isDead() {
     }
 }
 void Particle::addParticle(){
-    if (lifespan==100){
+    if (lifespan==200){
+        if(ofRandom(1.0) >.8){
+            particles.push_back(new newParticleSystem(ofVec3f(location.x,location.y,location.z), mass));
+//              particles.push_back( new Particle(ofVec3f(location.x,location.y,location.z), mass));
+//              particles.push_back( new Particle(ofVec3f(location.x,location.y,location.z), mass));
+            lifespan -=100;
+        }else{
+            particles.push_back( new Particle(ofVec3f(location.x,location.y,location.z), mass));
+            lifespan +=20;
+        }}
         
-           particles.push_back(new newParticleSystem(ofVec3f(location.x,location.y,location.z), mass));
-    }
+}
+
+Particle::~Particle(){
+    particles.clear();
 }
 
     

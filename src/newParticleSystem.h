@@ -12,28 +12,28 @@
 
 #include <iostream>
 #include "ofMain.h"
+
 #include "particleBase.h"
 #include "ParticleSystem.h"
+
 
 class newParticleSystem :public particleBase{
     
     public:
     newParticleSystem(ofVec3f, float);
-    virtual void update();
-    virtual void display();
-    virtual bool isDead();
-    virtual void checkEdges();
-    virtual void addParticle();
-    std::vector<particleBase*> particles;
+    void update();
+    void display();
+    bool isDead();
+    void checkEdges();
+    void addParticle();
     ~newParticleSystem();
     private:
-    
+    std::list<particleBase*> particles;
     ofVec3f origin;
     float radius;
     float size;
     float lifespan;
     float m;
-    
     
     
 };

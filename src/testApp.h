@@ -19,7 +19,7 @@ class testApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-        std::vector<particleBase*> systems;
+        std::list<particleBase*> systems;
 		ofEasyCam easyCam;
         ofLight spotlight;
         ofVec3f gravity;

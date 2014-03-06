@@ -10,9 +10,16 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-    for (particleBase* &ps : systems) {
-        ps->update();
-        ps->addParticle();
+    for(auto it = systems.begin(); it != systems.end();){
+        
+        if((*it)->isDead()){
+            //delete particles[i];
+            it = systems.erase(it);
+        }else{
+            (*it)->addParticle();
+            (*it)->update();
+            it++;
+        }
     }
 
 }
@@ -23,10 +30,9 @@ void testApp::draw(){
     easyCam.begin();
     ofPushMatrix();
     ofTranslate(-ofGetWidth()/2, -ofGetHeight()/2);
-    for (auto &ps : systems) {
-        ps->display();
+    for(auto it=systems.begin();it != systems.end();++it){
+        (*it)->display();
     }
-    
     ofPopMatrix();
     easyCam.end();
    spotlight.disable();
@@ -36,9 +42,7 @@ void testApp::draw(){
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
     systems.push_back(new Particle(ofVec3f(ofRandom(ofGetWidth()),ofGetHeight(),ofRandom(-400,-1200)), ofRandom(10,100)));
-//    for (particleBase* &ps : systems) {
-//    ps->addParticle();
-//    }
+
 }
 
 //--------------------------------------------------------------

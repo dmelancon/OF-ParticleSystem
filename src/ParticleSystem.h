@@ -12,7 +12,7 @@
 #include <iostream>
 #include "ofMain.h"
 #include "particleBase.h"
-#include "particle.h"
+#include "Particle.h"
 
 
 class ParticleSystem :public particleBase{
@@ -25,7 +25,7 @@ class ParticleSystem :public particleBase{
         virtual void checkEdges();
         virtual void addParticle();
         std::vector<particleBase*> particles;
-    ~ParticleSystem();
+    virtual ~ParticleSystem(){}
     
     private:
     

@@ -14,20 +14,26 @@
 #include "particleBase.h"
 #include "newParticleSystem.h"
 
+
 class Particle : public particleBase{
     public:
+    void update();
+    void display();
+    void checkEdges();
+    bool isDead();
+    void addParticle();
     Particle(ofVec3f, float);
-    virtual void update();
-    virtual void display();
-    virtual void checkEdges();
-    virtual bool isDead();
-    virtual void addParticle();
+    ~Particle();
+    private:
     ofVec3f location;
     ofVec3f velocity;
     ofVec3f acceleration;
     float mass;
     float lifespan;
     ofColor color;
-    std::vector<particleBase*> particles;
+    std::list<particleBase*> particles;
+    
 };
 #endif /* defined(__particlesystem1__Particle__) */
+
+
